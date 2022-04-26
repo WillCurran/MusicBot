@@ -5,7 +5,7 @@ import time
 import sys
 
 # delay multiplier
-NOTE_DELAY = 1.2
+NOTE_DELAY = 2.0
 FINAL_DELAY = 1.0
 
 print(mido.get_output_names())

@@ -1,6 +1,6 @@
-BUNDLE_PATH='~/Documents/genart/final_project/pretrained_models/attention_rnn.mag'
+BUNDLE_PATH='../pretrained_models/attention_rnn.mag'
 CONFIG='attention_rnn'
-OUTPUT_PATH='~/Documents/genart/final_project/generated'
+OUTPUT_PATH='../final_project/generated'
 
 while read line
 do
