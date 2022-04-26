@@ -7,6 +7,7 @@ import time
 import dis
 import random
 from more_itertools import peekable
+import midi_to_color
 
 # Amount to wait before sending off note sequence
 MAX_NOTE_DELAY = 2.0
@@ -53,7 +54,26 @@ def instructions_to_list(instructions):
     while instr != None:
         if instr.starts_line != None:
             l.append("")
-        s = "instr %s<%s> arg=%s argval=%s offset=%s\n" % (str(hex(instr.opcode)), str(instr.opname), str(instr.arg), str(instr.argval), str(instr.offset))
+        icolor = midi_to_color.colors['instr']
+        argcolor = midi_to_color.colors['arg']
+        numcolor = midi_to_color.colors['numeric']
+        nonecolor = midi_to_color.colors['None']
+        endc = midi_to_color.colors['ENDC']
+        hexcolor = midi_to_color.colors['0x']
+        constcolor = midi_to_color.colors['const']
+
+        valarg = numcolor
+        if instr.arg == None:
+            valarg = nonecolor
+        valargv = numcolor
+        if instr.argval == None:
+            valargv = nonecolor
+        elif not isinstance(instr.argval, int):
+            valargv = argcolor
+        valoffset = numcolor
+        if instr.offset == None:
+            valoffset = nonecolor
+        s = f"{icolor}instr{endc} {hexcolor}0x{numcolor}{str(hex(instr.opcode))[2:]}{endc}<{constcolor}{instr.opname}{endc}> {argcolor}arg{endc}={valarg}{instr.arg} {argcolor}argval{endc}={valargv}{instr.argval} {argcolor}offset{endc}={valoffset}{instr.offset}{endc}\n"
         l[-1] += s
         instr = next(instructions, None)
     return l
